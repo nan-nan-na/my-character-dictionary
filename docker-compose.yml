@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - 1234:8080
+    volumes:
+      - /e/doc/test:/app
+    stdin_open: true
+    tty: true
