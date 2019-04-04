@@ -1,31 +1,43 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <Navbar/>
+    <b-card>
+      <b-media>
+        <b-img slot="aside" blank blank-color="#ccc" width="64" alt="placeholder"></b-img>
+
+        <h5 class="mt-0">Media Title</h5>
+        <p>
+          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.
+          Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
+          ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        </p>
+        <p>
+          Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque
+          penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        </p>
+
+        <b-media>
+          <b-img slot="aside" blank blank-color="#ccc" width="64" alt="placeholder"></b-img>
+
+          <h5 class="mt-0">Nested Media</h5>
+          <p class="mb-0">
+            Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in
+            faucibus.
+          </p>
+        </b-media>
+      </b-media>
+    </b-card>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import Navbar from "@/components/Navbar.vue";
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+@Component({
+  components: {
+    Navbar
+  }
+})
+export default class App extends Vue {}
+</script>
