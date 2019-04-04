@@ -1,9 +1,23 @@
 <template>
   <div id="app">
     <Navbar />
-    <Card />
-    <!-- v-forでデータ数分だけカードを並べる -->
-    <Card />
+    <b-container class="bv-example-row">
+      <b-row>
+        <!-- v-forでデータ数分だけカードを並べる -->
+        <b-col lg="6">
+          <Card />
+        </b-col>
+        <b-col lg="6">
+          <Card />
+        </b-col>
+      </b-row>
+      <b-row>
+        <!-- v-forでデータ数分だけカードを並べる -->
+        <b-col lg="6">
+          <Card />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
