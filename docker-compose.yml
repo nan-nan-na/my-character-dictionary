@@ -1,9 +1,10 @@
-version: '3'
+version: "3"
 services:
   web:
     build: .
     ports:
       - 1234:8080
+      - 9005:9005
     volumes:
       - /e/doc/test:/app
     stdin_open: true
