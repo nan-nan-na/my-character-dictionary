@@ -4,18 +4,11 @@
     <b-container class="bv-example-row">
       <b-row>
         <!-- v-forでデータ数分だけカードを並べる -->
-        <b-col lg="6">
-          <Card />
-        </b-col>
-        <b-col lg="6">
-          <Card />
-        </b-col>
-      </b-row>
-      <b-row>
-        <!-- v-forでデータ数分だけカードを並べる -->
-        <b-col lg="6">
-          <Card />
-        </b-col>
+        <Card
+          v-for="character in this.getCharacters"
+          :key="character.no"
+          v-bind:character="character"
+        />
       </b-row>
     </b-container>
   </div>
@@ -23,6 +16,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Character } from "@/model/Character.ts";
 import Navbar from "@/components/Navbar.vue";
 import Card from "@/components/Card.vue";
 
@@ -32,5 +26,10 @@ import Card from "@/components/Card.vue";
     Card
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  private get getCharacters(): Character[] {
+    let characters = this.$store.getters.getCharacters();
+    return characters;
+  }
+}
 </script>

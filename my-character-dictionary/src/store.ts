@@ -1,23 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
-// import firebase from "@/plugins/firebase.ts";
+import { Character } from "@/model/Character.ts";
 
 Vue.use(Vuex);
 
 interface State {
-  characters: Array<Character>;
-}
-
-interface Character {
-  no: number;
-  PCName: string;
-  age: string;
-  gender: string;
-  job: string;
-  supplement: string;
-  system: string;
-  scenario: string;
-  PLName: string;
+  characters: Character[];
 }
 
 // テストデータ
@@ -26,29 +14,54 @@ let char1: Character = {
   PCName: "ほげ",
   age: "123",
   gender: "不明",
-  job: "nodata",
-  supplement: "nodata",
-  system: "nodata",
-  scenario: "nodata",
-  PLName: "nodata"
+  job: "私立探偵",
+  supplement: "不老不死",
+  system: "マルチホラージャンルRPG インセイン",
+  scenario: "楽園",
+  PLName: "北極星紫苑"
+};
+
+let char2: Character = {
+  no: 2,
+  PCName: "ぱげ",
+  age: "37",
+  gender: "男性",
+  job: "医者",
+  supplement: "ぱげ心療内科",
+  system: "忍術バトルRPG シノビガミ",
+  scenario: "最後の最後まで",
+  PLName: "北極星紫苑"
+};
+
+let char3: Character = {
+  no: 3,
+  PCName: "ふが",
+  age: "12",
+  gender: "女性",
+  job: "小学生",
+  supplement: "○○小学校6年3組",
+  system: "ご近所メルヘンRPG ピーカーブー",
+  scenario: "最後の最後まで",
+  PLName: "北極星紫苑"
 };
 
 export default new Vuex.Store({
   state: {
-    characters: [char1, char1, char1]
+    characters: [char2, char3, char1]
   } as State,
   getters: {
     getCharacters: state => () => {
       // 常に昇順で渡す
-      return state.characters.sort(
+      let characters = state.characters.sort(
         (a, b): number => {
           if (a.no < b.no) return -1;
           if (a.no >= b.no) return 1;
           return 0;
         }
       );
+      return characters;
     },
-    getCharacterByNo: (state, no: number) => () => {
+    getCharacterByNo: state => (no: number) => {
       let character = state.characters.find(character => character.no === no);
       if (character) {
         return character;
