@@ -10,8 +10,8 @@ interface State {
 
 // テストデータ
 let char1: Character = {
-  no: 1,
-  PCName: "ほげ",
+  no: "1",
+  PCName: "保科　弦",
   age: "123",
   gender: "不明",
   job: "私立探偵",
@@ -22,8 +22,8 @@ let char1: Character = {
 };
 
 let char2: Character = {
-  no: 2,
-  PCName: "ぱげ",
+  no: "2",
+  PCName: "原田　元祐",
   age: "37",
   gender: "男性",
   job: "医者",
@@ -34,8 +34,8 @@ let char2: Character = {
 };
 
 let char3: Character = {
-  no: 3,
-  PCName: "ふが",
+  no: "3",
+  PCName: "風雅　さつき",
   age: "12",
   gender: "女性",
   job: "小学生",
@@ -54,6 +54,8 @@ export default new Vuex.Store({
       // 常に昇順で渡す
       let characters = state.characters.sort(
         (a, b): number => {
+          if (a.no === undefined) return -1;
+          if (b.no === undefined) return -1;
           if (a.no < b.no) return -1;
           if (a.no >= b.no) return 1;
           return 0;
@@ -61,7 +63,7 @@ export default new Vuex.Store({
       );
       return characters;
     },
-    getCharacterByNo: state => (no: number) => {
+    getCharacterByNo: state => (no: string) => {
       let character = state.characters.find(character => character.no === no);
       if (character) {
         return character;

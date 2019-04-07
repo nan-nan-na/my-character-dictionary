@@ -9,6 +9,7 @@
           :key="character.no"
           v-bind:character="character"
         />
+        <AddCard />
       </b-row>
     </b-container>
   </div>
@@ -19,11 +20,13 @@ import { Component, Vue } from "vue-property-decorator";
 import { Character } from "@/model/Character.ts";
 import Navbar from "@/components/Navbar.vue";
 import Card from "@/components/Card.vue";
+import AddCard from "@/components/AddCard.vue";
 
 @Component({
   components: {
     Navbar,
-    Card
+    Card,
+    AddCard
   }
 })
 export default class App extends Vue {
