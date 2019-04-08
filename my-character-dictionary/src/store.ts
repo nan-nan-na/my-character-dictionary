@@ -80,14 +80,6 @@ export default new Vuex.Store({
     add(state, payload) {
       state.characters.push(payload);
     },
-    update(state, payload): boolean {
-      let deleteResult: boolean = this.delete(state, payload);
-      if (deleteResult) {
-        state.characters.push(payload);
-        return true;
-      }
-      return false;
-    },
     delete(state, payload): boolean {
       let idx: number = state.characters.findIndex(
         character => character.no === payload.no
@@ -103,9 +95,6 @@ export default new Vuex.Store({
   actions: {
     addAction(context, payload) {
       context.commit("add", payload);
-    },
-    updateAction(context, payload) {
-      context.commit("update", payload);
     },
     deleteAction(context, payload) {
       context.commit("delete", payload);

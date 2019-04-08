@@ -1,7 +1,7 @@
 <template>
   <b-col lg="6">
-    <div>
-      <b-card class="my-2" bg-variant="light">
+    <div v-if="!editMode">
+      <b-card class="my-2" bg-variant="light" @click="onClick">
         <p>No.{{ this.character.no }}</p>
         <b-media no-body>
           <b-media-aside>
@@ -27,16 +27,36 @@
         </b-media>
       </b-card>
     </div>
+    <div v-if="editMode">
+      <EditCard @change-state="onClick" :val="character" :deleteMode="true" />
+    </div>
   </b-col>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { Character } from "@/model/Character.ts";
+import EditCard from "@/components/EditCard.vue";
 
-@Component
+@Component({
+  components: {
+    EditCard
+  }
+})
 export default class Card extends Vue {
   @Prop()
   private character?: Character;
+  private editMode: boolean = false;
+  onClick() {
+    this.editMode = !this.editMode;
+  }
 }
 </script>
+<style scoped>
+.card {
+  height: 312px;
+}
+.card-body {
+  height: 100%;
+}
+</style>

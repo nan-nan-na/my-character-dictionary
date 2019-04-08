@@ -6,7 +6,7 @@
         <!-- v-forでデータ数分だけカードを並べる -->
         <Card
           v-for="character in this.getCharacters"
-          :key="character.no"
+          :key="character.id"
           v-bind:character="character"
         />
         <AddCard />

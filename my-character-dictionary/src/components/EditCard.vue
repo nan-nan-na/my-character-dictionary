@@ -2,7 +2,7 @@
   <b-card class="my-2" bg-variant="light">
     <b-form @reset="onReset">
       <b-container class="bv-example-row">
-        <b-row>
+        <b-row class="no-area">
           <b-col cols="4" class="pl-0">
             <b-form-input
               size="sm"
@@ -12,10 +12,29 @@
           </b-col>
           <b-col class="pr-0">
             <p align="right">
-              <b-button @click="onSubmit" variant="success" size="sm"
+              <b-button
+                v-b-tooltip.hover
+                title="delete"
+                v-if="showDelete"
+                @click="onDelete"
+                variant="danger"
+                size="sm"
+                >ー</b-button
+              >
+              <b-button
+                v-b-tooltip.hover
+                title="save"
+                @click="onSubmit"
+                variant="success"
+                size="sm"
                 >✔</b-button
               >
-              <b-button type="reset" variant="outline-secondary" size="sm"
+              <b-button
+                v-b-tooltip.hover
+                title="cancel"
+                type="reset"
+                variant="outline-secondary"
+                size="sm"
                 >✖</b-button
               >
             </p>
@@ -99,6 +118,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from "vue-property-decorator";
 import { Character } from "@/model/Character.ts";
+import * as lodash from "lodash";
 import store from "../store";
 
 let idCount: number = 3;
@@ -106,12 +126,17 @@ let idCount: number = 3;
 @Component
 export default class EditCard extends Vue {
   @Prop()
+  deleteMode?: boolean;
+
+  @Prop()
   val!: Character;
 
   private character!: Character;
+  private showDelete!: boolean;
 
   public created() {
-    this.character = this.val;
+    this.character = lodash.cloneDeep(this.val);
+    this.showDelete = this.deleteMode ? this.deleteMode : false;
   }
 
   @Emit("change-state")
@@ -120,10 +145,9 @@ export default class EditCard extends Vue {
   private onSubmit() {
     if (this.character.no === "") {
       alert("Noが不正です");
-    } else if (
-      this.$store.getters.getCharacterById(this.character.id) !== null
-    ) {
-      this.$store.dispatch("updateAction", this.character);
+    } else if (this.$store.getters.getCharacterById(this.val.id) !== null) {
+      this.$store.dispatch("deleteAction", this.val);
+      this.$store.dispatch("addAction", this.character);
       this.character = {};
       this.changeState();
     } else {
@@ -138,5 +162,15 @@ export default class EditCard extends Vue {
     this.character = {};
     this.changeState();
   }
+  private onDelete() {
+    this.$store.dispatch("deleteAction", this.character);
+    this.character = {};
+    this.changeState();
+  }
 }
 </script>
+<style scoped>
+.no-area {
+  height: 40px;
+}
+</style>
