@@ -1,15 +1,17 @@
 import Vue from "vue";
-import Vuex from "vuex";
+import Vuex, { Store } from "vuex";
 import { Character } from "@/model/Character.ts";
 
 Vue.use(Vuex);
 
 interface State {
+  id: number;
   characters: Character[];
 }
 
 // テストデータ
 let char1: Character = {
+  id: 1,
   no: "1",
   PCName: "保科　弦",
   age: "123",
@@ -22,6 +24,7 @@ let char1: Character = {
 };
 
 let char2: Character = {
+  id: 2,
   no: "2",
   PCName: "原田　元祐",
   age: "37",
@@ -34,6 +37,7 @@ let char2: Character = {
 };
 
 let char3: Character = {
+  id: 3,
   no: "3",
   PCName: "風雅　さつき",
   age: "12",
@@ -63,8 +67,8 @@ export default new Vuex.Store({
       );
       return characters;
     },
-    getCharacterByNo: state => (no: string) => {
-      let character = state.characters.find(character => character.no === no);
+    getCharacterById: state => (id: number) => {
+      let character = state.characters.find(character => character.id === id);
       if (character) {
         return character;
       }
@@ -97,14 +101,14 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    addAction(context) {
-      context.commit("add");
+    addAction(context, payload) {
+      context.commit("add", payload);
     },
-    updateAction(context) {
-      context.commit("update");
+    updateAction(context, payload) {
+      context.commit("update", payload);
     },
-    deleteAction(context) {
-      context.commit("delete");
+    deleteAction(context, payload) {
+      context.commit("delete", payload);
     }
   }
 });

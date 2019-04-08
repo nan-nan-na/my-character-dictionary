@@ -8,7 +8,7 @@
       </b-card>
     </div>
     <div v-if="addMode">
-      <EditCard @click-reset="onClick" character="emptyCharacter" />
+      <EditCard @change-state="onClick" :val="character" />
     </div>
   </b-col>
 </template>
@@ -25,19 +25,10 @@ import EditCard from "@/components/EditCard.vue";
 })
 export default class AddCard extends Vue {
   private addMode: boolean = false;
-  emptyCharacter: Character = {
-    no: "",
-    PCName: "",
-    age: "",
-    gender: "",
-    job: "",
-    supplement: "",
-    system: "",
-    scenario: "",
-    PLName: ""
-  };
+  private character: Character = {};
   onClick() {
     this.addMode = !this.addMode;
+    this.character = {};
   }
 }
 </script>
