@@ -143,20 +143,13 @@ export default class EditCard extends Vue {
   changeState() {}
 
   private onSubmit() {
-    if (this.character.no === "") {
-      alert("Noが不正です");
-    } else if (this.$store.getters.getCharacterById(this.val.id) !== null) {
-      this.$store.dispatch("deleteAction", this.val);
-      this.$store.dispatch("addAction", this.character);
-      this.character = {};
-      this.changeState();
+    if (this.$store.getters.getCharacterById(this.val.id) !== null) {
+      this.$store.dispatch("updateAction", this.character);
     } else {
-      this.character.id = idCount;
-      idCount = idCount + 1;
       this.$store.dispatch("addAction", this.character);
-      this.character = {};
-      this.changeState();
     }
+    this.character = {};
+    this.changeState();
   }
   private onReset() {
     this.character = {};
