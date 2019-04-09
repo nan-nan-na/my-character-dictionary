@@ -1,10 +1,12 @@
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
 import { Character } from "@/model/Character.ts";
+import firestore from "@/plugins/firestore.ts";
 
 Vue.use(Vuex);
 
 interface State {
+  init: boolean;
   id: number;
   characters: Character[];
 }
@@ -51,9 +53,14 @@ let char3: Character = {
 
 export default new Vuex.Store({
   state: {
+    init: false,
+    id: 3,
     characters: [char2, char3, char1]
   } as State,
   getters: {
+    getInit: state => () => {
+      return state.init;
+    },
     getCharacters: state => () => {
       // 常に昇順で渡す
       let characters = state.characters.sort(
@@ -77,7 +84,13 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    add(state, payload) {
+    setInit(state): void {
+      state.init = true;
+    },
+    setCharacters(state, payload) {
+      state.characters = payload;
+    },
+    add(state, payload): void {
       state.characters.push(payload);
     },
     delete(state, payload): boolean {
@@ -93,6 +106,19 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    init(state, context) {
+      if (!state.state.init) {
+        firestore
+          .collection("character")
+          .get()
+          .then(querySnapshot => {
+            if (querySnapshot) {
+              this.commit("setCharacter", querySnapshot);
+            }
+          });
+      }
+      context.commit("setInit");
+    },
     addAction(context, payload) {
       context.commit("add", payload);
     },
