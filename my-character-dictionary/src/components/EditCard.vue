@@ -13,10 +13,10 @@
           <b-col class="pr-0">
             <p align="right">
               <b-button
+                v-b-modal.modal-1
                 v-b-tooltip.hover
                 title="delete"
                 v-if="showDelete"
-                @click="onDelete"
                 variant="danger"
                 size="sm"
                 >ー</b-button
@@ -38,6 +38,11 @@
                 >✖</b-button
               >
             </p>
+            <b-modal id="modal-1" @ok="onDelete" title="Delete Character">
+              <p class="my-1">
+                Are you sure you want to delete this character?
+              </p>
+            </b-modal>
           </b-col>
         </b-row>
       </b-container>
