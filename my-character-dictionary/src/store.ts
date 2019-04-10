@@ -1,55 +1,24 @@
 import Vue from "vue";
-import Vuex from "vuex";
+import Vuex, { Store } from "vuex";
 import { Character } from "@/model/Character.ts";
+import firestore from "@/plugins/firestore.ts";
 
 Vue.use(Vuex);
 
 interface State {
+  init: boolean;
   characters: Character[];
 }
 
-// テストデータ
-let char1: Character = {
-  no: 1,
-  PCName: "ほげ",
-  age: "123",
-  gender: "不明",
-  job: "私立探偵",
-  supplement: "不老不死",
-  system: "マルチホラージャンルRPG インセイン",
-  scenario: "楽園",
-  PLName: "北極星紫苑"
-};
-
-let char2: Character = {
-  no: 2,
-  PCName: "ぱげ",
-  age: "37",
-  gender: "男性",
-  job: "医者",
-  supplement: "ぱげ心療内科",
-  system: "忍術バトルRPG シノビガミ",
-  scenario: "最後の最後まで",
-  PLName: "北極星紫苑"
-};
-
-let char3: Character = {
-  no: 3,
-  PCName: "ふが",
-  age: "12",
-  gender: "女性",
-  job: "小学生",
-  supplement: "○○小学校6年3組",
-  system: "ご近所メルヘンRPG ピーカーブー",
-  scenario: "最後の最後まで",
-  PLName: "北極星紫苑"
-};
-
 export default new Vuex.Store({
   state: {
-    characters: [char2, char3, char1]
+    init: false,
+    characters: []
   } as State,
   getters: {
+    getInit: state => () => {
+      return state.init;
+    },
     getCharacters: state => () => {
       // 常に昇順で渡す
       let characters = state.characters.sort(
@@ -71,7 +40,13 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    add(state, payload) {
+    setInit(state): void {
+      state.init = true;
+    },
+    setCharacters(state, payload) {
+      state.characters = payload;
+    },
+    add(state, payload): void {
       state.characters.push(payload);
     },
     update(state, payload): boolean {
@@ -95,6 +70,19 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    init(state, context) {
+      if (!state.state.init) {
+        firestore
+          .collection("character")
+          .get()
+          .then(querySnapshot => {
+            if (querySnapshot) {
+              this.commit("setCharacter", querySnapshot);
+            }
+          });
+      }
+      context.commit("setInit");
+    },
     addAction(context) {
       context.commit("add");
     },
