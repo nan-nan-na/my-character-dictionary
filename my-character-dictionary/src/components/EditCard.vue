@@ -47,16 +47,16 @@
         </b-row>
       </b-container>
       <b-media no-body>
-        <b-media-aside>
+        <b-media-aside class="img-area">
           <b-img
             blank
             blank-color="#5f9ea0"
-            width="64"
+            width="80"
             height="200"
             alt="Charactor image"
           ></b-img>
         </b-media-aside>
-        <b-media-body class="ml-3">
+        <b-media-body class="ml-0 data-area">
           <b-container class="bv-example-row mb-2">
             <b-row>
               <b-col class="px-0">
@@ -170,5 +170,11 @@ export default class EditCard extends Vue {
 <style scoped>
 .no-area {
   height: 40px;
+}
+.img-area {
+  width: 20%;
+}
+.data-area {
+  width: 80%;
 }
 </style>
