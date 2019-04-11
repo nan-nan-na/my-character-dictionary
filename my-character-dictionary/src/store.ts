@@ -8,23 +8,24 @@ import { db } from "@/plugins/firebase";
 Vue.use(Vuex);
 
 interface State {
+  user: any; // firebase.User | {} にすると、uidが拾えないので苦肉の策。
+  loginStatus: boolean;
   characters: Character[];
-}
-
-interface Actions {
-  add: {
-    character: Character;
-  };
-  remove: {
-    character: Character;
-  };
 }
 
 export default new Vuex.Store({
   state: {
+    user: {},
+    loginStatus: false,
     characters: []
   } as State,
   getters: {
+    user: state => () => {
+      return state.user;
+    },
+    isLogin: state => () => {
+      return state.loginStatus;
+    },
     characters: state => () => {
       return state.characters;
     },
@@ -37,52 +38,60 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setCharacters(state, payload) {
+    onAuthStateChanged(state, user: firebase.User | {}) {
+      state.user = user;
+    },
+    onUserStatusChanged(state, status: boolean) {
+      state.loginStatus = status;
+    },
+    setCharacters(state, payload: Character[]) {
       state.characters = payload;
     }
   },
   actions: {
     sync(context) {
-      db.collection("character")
-        .orderBy("no", "asc")
-        .get()
-        .then(querySnapshot => {
-          if (querySnapshot) {
-            let characters: Character[] = [];
-            querySnapshot.forEach(doc => {
-              characters.push(createCharacterByDocumentSnapshot(doc));
-            });
-            context.commit("setCharacters", characters);
-          }
-        })
-        .then()
-        .catch(function(error) {
-          console.log("Error getting document:", error);
-        });
+      if (this.state.user.uid) {
+        db.collection("characters")
+          .where("uid", "==", this.state.user.uid)
+          .orderBy("no", "asc")
+          .get()
+          .then(querySnapshot => {
+            if (querySnapshot) {
+              let characters: Character[] = [];
+              querySnapshot.forEach(doc => {
+                characters.push(createCharacterByDocumentSnapshot(doc));
+              });
+              context.commit("setCharacters", characters);
+            }
+          })
+          .then()
+          .catch(function(error) {
+            console.log("Error getting document:", error);
+          });
+      }
     },
     addAction(context, payload: Character) {
-      db.collection("character")
-        .add(createDocumentByCharacter(payload))
-        .then(docRef => {
-          console.log("Document written with ID: ", docRef.id);
-          context.dispatch("sync");
-        })
-        .catch(error => {
-          console.error("Error adding document: ", error);
-        });
+      if (this.state.user.uid) {
+        db.collection("characters")
+          .add(createDocumentByCharacter(payload, this.state.user.uid))
+          .then(docRef => {
+            console.log("Document written with ID: ", docRef.id);
+            context.dispatch("sync");
+          })
+          .catch(error => {
+            console.error("Error adding document: ", error);
+          });
+      }
     },
     updateAction(context, payload: Character) {
-      context
-        .dispatch("deleteAction", payload)
-        .then(() => {
-          context.dispatch("addAction", payload);
-        })
-        .then(() => {
+      context.dispatch("deleteAction", payload).then(() => {
+        context.dispatch("addAction", payload).then(() => {
           context.dispatch("sync");
         });
+      });
     },
     deleteAction(context, payload: Character) {
-      let doc = db.collection("character").doc(payload.id);
+      let doc = db.collection("characters").doc(payload.id);
       doc
         .delete()
         .then(() => {
@@ -114,7 +123,7 @@ const createCharacterByDocumentSnapshot = (
   };
 };
 
-const createDocumentByCharacter = (character: Character) => {
+const createDocumentByCharacter = (character: Character, uid: string) => {
   return {
     no: character.no ? character.no : "",
     PCName: character.PCName ? character.PCName : "",
@@ -124,6 +133,7 @@ const createDocumentByCharacter = (character: Character) => {
     supplement: character.supplement ? character.supplement : "",
     system: character.system ? character.system : "",
     scenario: character.scenario ? character.scenario : "",
-    PLName: character.PLName ? character.PLName : ""
+    PLName: character.PLName ? character.PLName : "",
+    uid: uid ? uid : ""
   };
 };

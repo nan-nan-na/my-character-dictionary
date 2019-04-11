@@ -9,4 +9,5 @@ export interface Character {
   system?: string;
   scenario?: string;
   PLName?: string;
+  uid?: string;
 }

@@ -1,4 +1,5 @@
 import * as firebase from "firebase/app";
+import "firebase/auth";
 import "firebase/firestore";
 
 export const app = firebase.initializeApp({
@@ -9,5 +10,7 @@ export const app = firebase.initializeApp({
   storageBucket: "my-char-dictionary.appspot.com",
   messagingSenderId: "102427001734"
 });
+
+export const provider = new firebase.auth.TwitterAuthProvider();
 
 export const db = app.firestore();

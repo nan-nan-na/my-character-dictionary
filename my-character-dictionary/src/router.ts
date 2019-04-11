@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import CardList from "@/views/CardList.vue";
+import Login from "@/views/Login.vue";
 
 Vue.use(Router);
 
@@ -9,14 +10,14 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/",
+      path: "/main",
       name: "cardList",
       component: CardList
     },
     {
-      path: "/login",
+      path: "/",
       name: "login",
-      component: CardList /* 要変更 */
+      component: Login
     }
   ]
 });
