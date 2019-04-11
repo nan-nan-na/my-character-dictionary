@@ -3,13 +3,12 @@
     <b-navbar toggleable variant="info" type="light">
       <b-navbar-brand href="#">
         <img
-          src="../assets/lower_m.png"
+          src="../assets/logo.png"
           class="d-inline-block align-top"
           alt="【M】"
         />
-        My Character Dictionary
+        Myキャラ図鑑
       </b-navbar-brand>
-      <!-- ログイン機能が作成できなかった場合は以下削除 -->
       <b-navbar-toggle
         target="nav-text-collapse"
         label="Menu"
@@ -20,7 +19,6 @@
           <b-nav-item type="dark" href="#">Logout</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
-      <!-- ここまで -->
     </b-navbar>
   </div>
 </template>

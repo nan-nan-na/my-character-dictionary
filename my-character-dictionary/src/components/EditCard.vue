@@ -38,9 +38,14 @@
                 >✖</b-button
               >
             </p>
-            <b-modal id="modal-1" @ok="onDelete" title="Delete Character">
+            <b-modal
+              id="modal-1"
+              @ok="onDelete"
+              title="キャラクターを削除します"
+            >
               <p class="my-1">
-                Are you sure you want to delete this character?
+                選択されたキャラクターを削除します。
+                <br />よろしいですか？
               </p>
             </b-modal>
           </b-col>
