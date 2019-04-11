@@ -153,7 +153,7 @@ export default class EditCard extends Vue {
   changeState() {}
 
   private onSubmit() {
-    if (this.$store.getters.getCharacterById(this.val.id) !== null) {
+    if (this.$store.getters.characterById(this.val.id) !== null) {
       this.$store.dispatch("updateAction", this.character);
     } else {
       this.$store.dispatch("addAction", this.character);

@@ -25,10 +25,10 @@ export default new Vuex.Store({
     characters: []
   } as State,
   getters: {
-    getCharacters: state => () => {
+    characters: state => () => {
       return state.characters;
     },
-    getCharacterById: state => (id: string) => {
+    characterById: state => (id: string) => {
       let character = state.characters.find(character => character.id === id);
       if (character) {
         return character;
