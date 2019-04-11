@@ -7,7 +7,7 @@
           class="d-inline-block align-top"
           alt="【M】"
         />
-        My Charactor Dictionary
+        My Character Dictionary
       </b-navbar-brand>
       <!-- ログイン機能が作成できなかった場合は以下削除 -->
       <b-navbar-toggle
