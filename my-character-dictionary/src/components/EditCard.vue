@@ -13,12 +13,12 @@
           <b-col class="pr-0">
             <p align="right">
               <b-button
-                v-b-modal.modal-1
                 v-b-tooltip.hover
                 title="delete"
                 v-if="showDelete"
                 variant="danger"
                 size="sm"
+                @click="modalShow = !modalShow"
                 >ー</b-button
               >
               <b-button
@@ -39,7 +39,7 @@
               >
             </p>
             <b-modal
-              id="modal-1"
+              v-model="modalShow"
               @ok="onDelete"
               title="キャラクターを削除します"
             >
@@ -142,6 +142,7 @@ export default class EditCard extends Vue {
 
   private character!: Character;
   private showDelete!: boolean;
+  private modalShow: boolean = false;
 
   public created() {
     this.character = lodash.cloneDeep(this.val);
@@ -160,13 +161,18 @@ export default class EditCard extends Vue {
     this.character = {};
     this.changeState();
   }
+
   private onReset() {
     this.character = {};
     this.changeState();
   }
-  private onDelete() {
+
+  private onDelete(bvModalEvt: any) {
+    /** bootstrap-vueの制御のため型が無いのでany */
     this.$store.dispatch("deleteAction", this.character);
     this.character = {};
+    bvModalEvt.preventDefault();
+    this.modalShow = false;
     this.changeState();
   }
 }
