@@ -69,12 +69,15 @@ import EditCard from "@/components/EditCard.vue";
 export default class Card extends Vue {
   @Prop()
   private character?: Character;
+
   private editMode: boolean = false;
+
   onClick() {
     this.editMode = !this.editMode;
   }
 }
 </script>
+
 <style scoped>
 .card {
   height: 312px;

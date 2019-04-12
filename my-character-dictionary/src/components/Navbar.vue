@@ -32,6 +32,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import * as firebaseConst from "@/plugins/firebase.ts";
 import * as firebase from "firebase/app";
 import "firebase/auth";
+import debug from "@/plugins/debugLog.ts";
 
 @Component
 export default class Navber extends Vue {
@@ -53,7 +54,7 @@ export default class Navber extends Vue {
           });
       })
       .catch(e => {
-        console.log("twitter login error" + JSON.stringify(e));
+        debug.log("twitter login error" + JSON.stringify(e));
       });
   }
 
@@ -63,10 +64,10 @@ export default class Navber extends Vue {
       .signOut()
       .then(() => {
         this.$store.commit("setCharacters", []);
-        console.log("signout!!!");
+        debug.log("signout!!!");
       })
       .catch(e => {
-        console.log("Logout error" + JSON.stringify(e));
+        debug.log("Logout error" + JSON.stringify(e));
       });
   }
 }

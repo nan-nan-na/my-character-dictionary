@@ -26,6 +26,7 @@ import EditCard from "@/components/EditCard.vue";
 export default class AddCard extends Vue {
   private addMode: boolean = false;
   private character: Character = {};
+
   onClick() {
     this.addMode = !this.addMode;
     this.character = {};

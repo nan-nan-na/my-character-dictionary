@@ -11,6 +11,7 @@
     </b-row>
   </b-container>
 </template>
+
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Character } from "@/model/Character.ts";

@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
 import { Character } from "@/model/Character.ts";
-import * as lodash from "lodash";
 import * as firebase from "firebase/app";
 import { db } from "@/plugins/firebase";
+import debug from "@/plugins/debugLog.ts";
 
 Vue.use(Vuex);
 
@@ -66,7 +66,7 @@ export default new Vuex.Store({
           })
           .then()
           .catch(function(error) {
-            console.log("Error getting document:", error);
+            debug.log("Error getting document:" + JSON.stringify(error));
           });
       }
     },
@@ -75,11 +75,11 @@ export default new Vuex.Store({
         db.collection("characters")
           .add(createDocumentByCharacter(payload, this.state.user.uid))
           .then(docRef => {
-            console.log("Document written with ID: ", docRef.id);
+            debug.log("Document written with ID: " + docRef.id);
             context.dispatch("sync");
           })
           .catch(error => {
-            console.error("Error adding document: ", error);
+            debug.log("Error adding document: " + JSON.stringify(error));
           });
       }
     },
@@ -95,11 +95,11 @@ export default new Vuex.Store({
       doc
         .delete()
         .then(() => {
-          console.log("Document successfully deleted!");
+          debug.log("Document successfully deleted!");
           context.dispatch("sync");
         })
         .catch(error => {
-          console.error("Error removing document: ", error);
+          debug.log("Error removing document: " + JSON.stringify(error));
         });
     }
   }

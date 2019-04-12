@@ -129,7 +129,6 @@
 import { Component, Prop, Vue, Emit } from "vue-property-decorator";
 import { Character } from "@/model/Character.ts";
 import * as lodash from "lodash";
-import store from "../store";
 
 let idCount: number = 3;
 
