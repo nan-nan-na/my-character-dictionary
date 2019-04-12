@@ -73,7 +73,9 @@ export default class Card extends Vue {
   private editMode: boolean = false;
 
   onClick() {
-    this.editMode = !this.editMode;
+    if (this.$store.getters.isLogin()) {
+      this.editMode = !this.editMode;
+    }
   }
 }
 </script>

@@ -29,10 +29,7 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import * as firebaseConst from "@/plugins/firebase.ts";
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import debug from "@/plugins/debugLog.ts";
+import Firebase from "@/plugins/firebase.ts";
 
 @Component
 export default class Navber extends Vue {
@@ -40,35 +37,11 @@ export default class Navber extends Vue {
   isLogin?: boolean = false;
 
   private loginAction() {
-    firebase
-      .auth()
-      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-      .then(() => {
-        firebase
-          .auth()
-          .signInWithPopup(firebaseConst.provider)
-          .then(() => {
-            this.$store.dispatch("sync").then(() => {
-              this.$router.push("/main");
-            });
-          });
-      })
-      .catch(e => {
-        debug.log("twitter login error" + JSON.stringify(e));
-      });
+    Firebase.login();
   }
 
   private logoutAction() {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        this.$store.commit("setCharacters", []);
-        debug.log("signout!!!");
-      })
-      .catch(e => {
-        debug.log("Logout error" + JSON.stringify(e));
-      });
+    Firebase.logout();
   }
 }
 </script>

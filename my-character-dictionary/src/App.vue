@@ -37,5 +37,16 @@ export default class App extends Vue {
       }
     });
   }
+  public updated() {
+    // F5は対策できたけど、URL書き換えは対策できない
+    this.isLogin = this.$store.getters.isLogin();
+  }
 }
 </script>
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", YuGothic,
+    "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, Arial, "メイリオ", Meiryo,
+    sans-serif;
+}
+</style>
