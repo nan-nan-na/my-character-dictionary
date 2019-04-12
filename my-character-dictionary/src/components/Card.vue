@@ -14,7 +14,7 @@
             <b-img
               blank
               blank-color="#5f9ea0"
-              width="80"
+              width="1"
               height="200"
               alt="Charactor image"
             ></b-img>
@@ -87,6 +87,7 @@ export default class Card extends Vue {
 }
 .img-area {
   width: 20%;
+  background-color: #5f9ea0;
 }
 .data-area {
   width: 80%;
