@@ -5,7 +5,7 @@
         <div class="m-2">
           <b-jumbotron bg-variant="info" text-variant="white" border-variant="dark" header-tag="h2">
             <template slot="header">Myキャラ図鑑</template>
-            <template slot="lead">TRPGのキャラクターを記録するサービス</template>
+            <template slot="lead">TRPGのキャラクターを記録できるサービス</template>
             <hr class="my-4">
             <p>TRPG(テーブルトークRPG)で、様々な冒険・事件・日常を過ごしたキャラクター達を、簡潔に記録として残すことができるWebサービスです。</p>
             <b-button
@@ -65,7 +65,7 @@ export default class Login extends Vue {
   font-size: 2.7rem;
 }
 .lead {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 </style>
 
