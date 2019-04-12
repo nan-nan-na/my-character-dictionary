@@ -1,4 +1,4 @@
-const DEBUG_MODE: boolean = true;
+const DEBUG_MODE: boolean = false;
 
 export default {
   log(log: string) {
