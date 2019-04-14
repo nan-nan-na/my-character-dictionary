@@ -6,6 +6,6 @@ services:
       - 1234:8080
       - 9005:9005
     volumes:
-      - /e/doc/test:/app
+      - /e/doc/my-character-dictionary:/app
     stdin_open: true
     tty: true
