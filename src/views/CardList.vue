@@ -26,8 +26,7 @@ import AddCard from "@/components/AddCard.vue";
 })
 export default class CardList extends Vue {
   private get getCharacters(): Character[] {
-    let characters = this.$store.getters.characters();
-    return characters;
+    return this.$store.getters.characters();
   }
 }
 </script>

@@ -34,7 +34,7 @@ import Firebase from "@/plugins/firebase.ts";
 @Component
 export default class Navber extends Vue {
   @Prop()
-  isLogin?: boolean = false;
+  private isLogin?: boolean = false;
 
   private loginAction() {
     Firebase.login();

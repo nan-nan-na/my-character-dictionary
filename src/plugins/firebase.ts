@@ -43,7 +43,7 @@ export default {
       .signOut()
       .then(() => {
         store.commit("setCharacters", []);
-        debug.log("signout!!!");
+        debug.log("Logout complete");
       })
       .catch(e => {
         debug.log("Logout error" + JSON.stringify(e));

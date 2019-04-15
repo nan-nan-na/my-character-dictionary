@@ -130,15 +130,13 @@ import { Component, Prop, Vue, Emit } from "vue-property-decorator";
 import { Character } from "@/model/Character.ts";
 import * as lodash from "lodash";
 
-let idCount: number = 3;
-
 @Component
 export default class EditCard extends Vue {
   @Prop()
-  deleteMode?: boolean;
+  private deleteMode?: boolean;
 
   @Prop()
-  val!: Character;
+  private val!: Character;
 
   private character!: Character;
   private showDelete!: boolean;
@@ -158,21 +156,19 @@ export default class EditCard extends Vue {
     } else {
       this.$store.dispatch("addAction", this.character);
     }
-    this.character = {};
-    this.changeState();
-  }
-
-  private onReset() {
-    this.character = {};
-    this.changeState();
+    this.onReset();
   }
 
   private onDelete(bvModalEvt: any) {
     /** bootstrap-vueの制御のため型が無いのでany */
     this.$store.dispatch("deleteAction", this.character);
-    this.character = {};
     bvModalEvt.preventDefault();
     this.modalShow = false;
+    this.onReset();
+  }
+
+  private onReset() {
+    this.character = {};
     this.changeState();
   }
 }

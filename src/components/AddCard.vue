@@ -27,7 +27,7 @@ export default class AddCard extends Vue {
   private addMode: boolean = false;
   private character: Character = {};
 
-  onClick() {
+  private onClick() {
     this.addMode = !this.addMode;
     this.character = {};
   }
